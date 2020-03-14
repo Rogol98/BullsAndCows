@@ -10,7 +10,6 @@ import javafx.scene.text.Font;
 
 public class Controller {
     int howManyClicked = 0;
-    int whichPlayer = 1;
     int cowsP1;
     int bullsP1;
     int cowsP2;
@@ -19,6 +18,7 @@ public class Controller {
     String wordP2;
     String guessWordP1;
     String guessWordP2;
+    WhichPlayer whichPlayer = WhichPlayer.PLAYER_ONE;
 
 
     //<editor-fold desc="TextFields">
@@ -191,7 +191,7 @@ public class Controller {
         mainScreen.setFont(Font.font("Verdana", 16));
         buttonDone.setDisable(true);
         switch (whichPlayer) {
-            case 1:
+            case PLAYER_ONE:
                 guessWordP1 = p1Guess.getText().toLowerCase();
                 p1LastWord.setText(guessWordP1);
 
@@ -216,14 +216,15 @@ public class Controller {
                 p1Guess.setEditable(false);
                 p2Guess.setEditable(true);
                 if(wordP2.equals(guessWordP1)){
+                    mainScreen.setAlignment(Pos.CENTER);
                     mainScreen.setFont(Font.font("Verdana", 24));
                     mainScreen.setText("WINNER WINNER PLAYER 1");
                     p2Guess.setEditable(false);
                     checkButton.setDisable(true);
                 }
-                whichPlayer = 2;
+                whichPlayer = WhichPlayer.PLAYER_TWO;
                 break;
-            case 2:
+            case PLAYER_TWO:
                 guessWordP2 = p2Guess.getText().toLowerCase();
                 p2LastWord.setText(guessWordP2);
 
@@ -248,12 +249,13 @@ public class Controller {
                 p2Guess.setEditable(false);
                 p1Guess.setEditable(true);
                 if(wordP1.equals(guessWordP2)){
+                    mainScreen.setAlignment(Pos.CENTER);
                     mainScreen.setFont(Font.font("Verdana", 24));
                     mainScreen.setText("WINNER WINNER PLAYER 2");
                     p1Guess.setEditable(false);
                     checkButton.setDisable(true);
                 }
-                whichPlayer = 1;
+                whichPlayer = WhichPlayer.PLAYER_ONE;
                 break;
         }
 
