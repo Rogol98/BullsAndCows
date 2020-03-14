@@ -127,9 +127,16 @@ public class Controller {
                 howManyClicked++;
                 wordP1 = mainScreen.getText();
                 wordP1 = wordP1.replaceAll("\\s+", "").toLowerCase();
-                mainScreen.setText("Word saved!");
-                guess2Length.setText(guess2Length.getText()+wordP1.length());
-                mainScreen.setEditable(false);
+                if(wordP1.length() < 1) {
+                    mainScreen.setFont(Font.font("Verdana", 14));
+                    mainScreen.setText("Your word has to have at least one character! Enter a new one:");
+                    howManyClicked--;
+                    howManyClicked--;
+                }else {
+                    mainScreen.setText("Word saved!");
+                    guess2Length.setText(guess2Length.getText() + wordP1.length());
+                    mainScreen.setEditable(false);
+                }
                 break;
             case 3:
                 howManyClicked++;
@@ -137,7 +144,7 @@ public class Controller {
                 break;
             case 4:
                 howManyClicked++;
-                mainScreen.setText("The word can't be longer than " + wordP1.length() + " characters!");
+                mainScreen.setText("The word can't be longer than " + wordP1.length() + " character/s!");
                 break;
 
             case 5:
@@ -152,10 +159,16 @@ public class Controller {
                 wordP2 = wordP2.replaceAll("\\s+", "").toLowerCase();
                 if (wordP1.length() < wordP2.length()) {
                     mainScreen.setFont(Font.font("Verdana", 12));
-                    mainScreen.setText("Your word can't be longer than your opponent's! (at most: " + wordP1.length() + " characters)");
+                    mainScreen.setText("Your word can't be longer than your opponent's! (at most: " + wordP1.length() + " character/s)");
                     howManyClicked--;
                     howManyClicked--;
-                } else{
+                }else if(wordP2.length() < 1){
+                    mainScreen.setFont(Font.font("Verdana", 14));
+                    mainScreen.setText("Your word has to have at least one character! Enter a new one:");
+                    howManyClicked--;
+                    howManyClicked--;
+                }
+                else{
                     guess1Length.setText(guess1Length.getText()+wordP2.length());
                     mainScreen.setText("Word saved!");
                 }
@@ -211,6 +224,7 @@ public class Controller {
                     p1BullsBestWord.setText(Integer.toString(bullsP1));
                     p1CowsBestWord.setText(Integer.toString(cowsP1));
                 }
+                mainScreen.setAlignment(Pos.CENTER_LEFT);
                 mainScreen.setText("Player 2: fill 'Guess the word' label and check!");
                 p1Guess.setText("");
                 p1Guess.setEditable(false);
@@ -224,6 +238,7 @@ public class Controller {
                 }
                 whichPlayer = WhichPlayer.PLAYER_TWO;
                 break;
+
             case PLAYER_TWO:
                 guessWordP2 = p2Guess.getText().toLowerCase();
                 p2LastWord.setText(guessWordP2);
@@ -244,6 +259,7 @@ public class Controller {
                     p2BullsBestWord.setText(Integer.toString(bullsP2));
                     p2CowsBestWord.setText(Integer.toString(cowsP2));
                 }
+                mainScreen.setAlignment(Pos.CENTER_LEFT);
                 mainScreen.setText("Player 1: fill 'Guess the word' label and check!");
                 p2Guess.setText("");
                 p2Guess.setEditable(false);
@@ -258,8 +274,8 @@ public class Controller {
                 whichPlayer = WhichPlayer.PLAYER_ONE;
                 break;
         }
-
     }
+
 
 }
 
