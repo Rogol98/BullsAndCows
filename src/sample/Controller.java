@@ -8,6 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 
+import java.util.Arrays;
+
 public class Controller {
     int howManyClicked = 0;
     int cowsP1;
@@ -101,13 +103,19 @@ public class Controller {
 
     int howManyBulls(String word, String guessWord) {
         int bulls = 0;
-        for (int i = 0;  i < word.length() && i < guessWord.length(); i++) {
+        for (int i = 0; i < word.length() && i < guessWord.length(); i++) {
             if (guessWord.charAt(i) == word.charAt(i)) {
                 bulls++;
             }
 
         }
         return bulls;
+    }
+
+    boolean isAWord(String wordToCheck, String[] allWords) {
+        return Arrays.stream(allWords)
+                .map(String::toLowerCase)
+                .anyMatch(wordFromAllWords -> wordFromAllWords.equals(wordToCheck));
     }
 
     @FXML
@@ -127,12 +135,18 @@ public class Controller {
                 howManyClicked++;
                 wordP1 = mainScreen.getText();
                 wordP1 = wordP1.replaceAll("\\s+", "").toLowerCase();
-                if(wordP1.length() < 1) {
+                if (wordP1.length() < 1) {
                     mainScreen.setFont(Font.font("Verdana", 14));
                     mainScreen.setText("Your word has to have at least one character! Enter a new one:");
                     howManyClicked--;
                     howManyClicked--;
-                }else {
+                } else if (!isAWord(wordP1, ObtainingAllWords.listOfAllWords())) {
+                    mainScreen.setFont(Font.font("Verdana", 14));
+                    mainScreen.setText("This word doesn't exist in Polish language! Enter a proper one! ");
+                    howManyClicked--;
+                    howManyClicked--;
+                } else {
+                    mainScreen.setFont(Font.font("Verdana", 18));
                     mainScreen.setText("Word saved!");
                     guess2Length.setText(guess2Length.getText() + wordP1.length());
                     mainScreen.setEditable(false);
@@ -140,6 +154,7 @@ public class Controller {
                 break;
             case 3:
                 howManyClicked++;
+                mainScreen.setFont(Font.font("Verdana", 14));
                 mainScreen.setText("Player 2: Please enter the key word for Player 1: (click)");
                 break;
             case 4:
@@ -162,14 +177,19 @@ public class Controller {
                     mainScreen.setText("Your word can't be longer than your opponent's! (at most: " + wordP1.length() + " character/s)");
                     howManyClicked--;
                     howManyClicked--;
-                }else if(wordP2.length() < 1){
+                } else if (wordP2.length() < 1) {
                     mainScreen.setFont(Font.font("Verdana", 14));
                     mainScreen.setText("Your word has to have at least one character! Enter a new one:");
                     howManyClicked--;
                     howManyClicked--;
-                }
-                else{
-                    guess1Length.setText(guess1Length.getText()+wordP2.length());
+                } else if (!isAWord(wordP2, ObtainingAllWords.listOfAllWords())) {
+                    mainScreen.setFont(Font.font("Verdana", 14));
+                    mainScreen.setText("This word doesn't exist in Polish language! Enter a proper one! ");
+                    howManyClicked--;
+                    howManyClicked--;
+                } else {
+                    guess1Length.setText(guess1Length.getText() + wordP2.length());
+                    mainScreen.setFont(Font.font("Verdana", 18));
                     mainScreen.setText("Word saved!");
                 }
                 break;
@@ -214,12 +234,11 @@ public class Controller {
                 p1LastWord.setText(guessWordP1);
                 p1CowsLastWord.setText(Integer.toString(cowsP1));
                 p1BullsLastWord.setText(Integer.toString(bullsP1));
-                if(bullsP1 > Integer.parseInt(p1BullsBestWord.getText())){
+                if (bullsP1 > Integer.parseInt(p1BullsBestWord.getText())) {
                     p1BestWord.setText(guessWordP1);
                     p1BullsBestWord.setText(Integer.toString(bullsP1));
                     p1CowsBestWord.setText(Integer.toString(cowsP1));
-                }
-                else if(bullsP1 == Integer.parseInt(p1BullsBestWord.getText()) && cowsP1 > Integer.parseInt(p1CowsBestWord.getText())){
+                } else if (bullsP1 == Integer.parseInt(p1BullsBestWord.getText()) && cowsP1 > Integer.parseInt(p1CowsBestWord.getText())) {
                     p1BestWord.setText(guessWordP1);
                     p1BullsBestWord.setText(Integer.toString(bullsP1));
                     p1CowsBestWord.setText(Integer.toString(cowsP1));
@@ -229,7 +248,7 @@ public class Controller {
                 p1Guess.setText("");
                 p1Guess.setEditable(false);
                 p2Guess.setEditable(true);
-                if(wordP2.equals(guessWordP1)){
+                if (wordP2.equals(guessWordP1)) {
                     mainScreen.setAlignment(Pos.CENTER);
                     mainScreen.setFont(Font.font("Verdana", 24));
                     mainScreen.setText("WINNER WINNER PLAYER 1");
@@ -249,12 +268,11 @@ public class Controller {
                 p2LastWord.setText(guessWordP2);
                 p2CowsLastWord.setText(Integer.toString(cowsP2));
                 p2BullsLastWord.setText(Integer.toString(bullsP2));
-                if(bullsP2 > Integer.parseInt(p2BullsBestWord.getText())){
+                if (bullsP2 > Integer.parseInt(p2BullsBestWord.getText())) {
                     p2BestWord.setText(guessWordP2);
                     p2BullsBestWord.setText(Integer.toString(bullsP2));
                     p2CowsBestWord.setText(Integer.toString(cowsP2));
-                }
-                else if(bullsP2 == Integer.parseInt(p2BullsBestWord.getText()) && cowsP2 > Integer.parseInt(p2CowsBestWord.getText())){
+                } else if (bullsP2 == Integer.parseInt(p2BullsBestWord.getText()) && cowsP2 > Integer.parseInt(p2CowsBestWord.getText())) {
                     p2BestWord.setText(guessWordP2);
                     p2BullsBestWord.setText(Integer.toString(bullsP2));
                     p2CowsBestWord.setText(Integer.toString(cowsP2));
@@ -264,7 +282,7 @@ public class Controller {
                 p2Guess.setText("");
                 p2Guess.setEditable(false);
                 p1Guess.setEditable(true);
-                if(wordP1.equals(guessWordP2)){
+                if (wordP1.equals(guessWordP2)) {
                     mainScreen.setAlignment(Pos.CENTER);
                     mainScreen.setFont(Font.font("Verdana", 24));
                     mainScreen.setText("WINNER WINNER PLAYER 2");
