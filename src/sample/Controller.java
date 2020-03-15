@@ -112,10 +112,9 @@ public class Controller {
         return bulls;
     }
 
-    boolean isAWord(String wordToCheck, String[] allWords) {
+    boolean isNotAWord(String wordToCheck, String[] allWords) {
         return Arrays.stream(allWords)
-                .map(String::toLowerCase)
-                .anyMatch(wordFromAllWords -> wordFromAllWords.equals(wordToCheck));
+                .noneMatch(wordFromAllWords -> wordFromAllWords.equals(wordToCheck));
     }
 
     @FXML
@@ -140,7 +139,7 @@ public class Controller {
                     mainScreen.setText("Your word has to have at least one character! Enter a new one:");
                     howManyClicked--;
                     howManyClicked--;
-                } else if (!isAWord(wordP1, ObtainingAllWords.listOfAllWords())) {
+                } else if (isNotAWord(wordP1, ObtainingAllWords.wordsFromModifiedFile())) {
                     mainScreen.setFont(Font.font("Verdana", 14));
                     mainScreen.setText("This word doesn't exist in Polish language! Enter a proper one! ");
                     howManyClicked--;
@@ -182,7 +181,7 @@ public class Controller {
                     mainScreen.setText("Your word has to have at least one character! Enter a new one:");
                     howManyClicked--;
                     howManyClicked--;
-                } else if (!isAWord(wordP2, ObtainingAllWords.listOfAllWords())) {
+                } else if (isNotAWord(wordP2, ObtainingAllWords.wordsFromModifiedFile())) {
                     mainScreen.setFont(Font.font("Verdana", 14));
                     mainScreen.setText("This word doesn't exist in Polish language! Enter a proper one! ");
                     howManyClicked--;
