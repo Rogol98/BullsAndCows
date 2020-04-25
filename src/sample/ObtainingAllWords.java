@@ -22,9 +22,7 @@ public class ObtainingAllWords {
             e.printStackTrace();
         }
 
-        String[] strings = fileText.split("\n");
-
-        return strings;
+        return fileText.split("\n");
     }
 
     static String[] sortAlphabetically() {
