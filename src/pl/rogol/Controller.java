@@ -1,4 +1,4 @@
-package sample;
+package pl.rogol;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

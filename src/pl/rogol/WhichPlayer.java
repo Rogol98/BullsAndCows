@@ -1,4 +1,4 @@
-package sample;
+package pl.rogol;
 
 public enum WhichPlayer {
     PLAYER_ONE,
