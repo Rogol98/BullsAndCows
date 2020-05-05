@@ -139,7 +139,7 @@ public class Controller {
                     mainScreen.setText("Your word has to have at least one character! Enter a new one:");
                     howManyClicked--;
                     howManyClicked--;
-                } else if (isNotAWord(wordP1, ObtainingAllWords.wordsFromModifiedFile())) {
+                } else if (isNotAWord(wordP1, AllWords.wordsFromModifiedFile(wordP1))) {
                     mainScreen.setFont(Font.font("Verdana", 14));
                     mainScreen.setText("This word doesn't exist in Polish language! Enter a proper one! ");
                     howManyClicked--;
@@ -181,7 +181,7 @@ public class Controller {
                     mainScreen.setText("Your word has to have at least one character! Enter a new one:");
                     howManyClicked--;
                     howManyClicked--;
-                } else if (isNotAWord(wordP2, ObtainingAllWords.wordsFromModifiedFile())) {
+                } else if (isNotAWord(wordP2, AllWords.wordsFromModifiedFile(wordP2))) {
                     mainScreen.setFont(Font.font("Verdana", 14));
                     mainScreen.setText("This word doesn't exist in Polish language! Enter a proper one! ");
                     howManyClicked--;
